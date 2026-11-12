@@ -1,0 +1,46 @@
+# 地図の部品を取得する（文京区）。GitHub の「Actions」タブから手動で実行する。
+# 1) 地理院の最適化ベクトルタイル（PMTiles）から文京区のまわりだけを切り出し、区画ごとのファイル（map/tiles/z/x/y.pbf）に分ける
+# 2) 見た目の設定（style）・記号の画像（sprite）・文字の形（glyphs）・地図の部品（MapLibre）を取得する
+# 3) map/ フォルダに保存してコミットする
+name: 地図の部品を取得（文京区）
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: PMTiles の道具を入れる
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p /tmp/pm
+          gh release download --repo protomaps/go-pmtiles --pattern '*Linux_x86_64.tar.gz' --dir /tmp/pm
+          tar -xzf /tmp/pm/*.tar.gz -C /tmp/pm
+          /tmp/pm/pmtiles version
+
+      - name: 文京区のまわりだけ切り出す
+        run: |
+          /tmp/pm/pmtiles extract \
+            https://cyberjapandata.gsi.go.jp/xyz/optimal_bvmap-v1/optimal_bvmap-v1.pmtiles \
+            /tmp/bunkyo.pmtiles --bbox=139.695,35.685,139.795,35.750 --maxzoom=16
+          ls -la /tmp/bunkyo.pmtiles
+
+      - name: 区画ごとのファイルに分ける
+        run: |
+          rm -rf map/tiles map/bunkyo.pmtiles map/lib/pmtiles.js
+          python3 scripts/pmtiles_to_dir.py /tmp/bunkyo.pmtiles map/tiles 139.695 35.685 139.795 35.750
+
+      - name: 見た目の設定・記号・文字の形・部品を取得
+        run: python3 scripts/fetch_map_assets.py map
+
+      - name: 保存（コミット）
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A map
+          git commit -m "地図の部品を更新（文京区）" || echo "変更なし"
+          git push
