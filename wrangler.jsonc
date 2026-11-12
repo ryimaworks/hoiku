@@ -1,0 +1,14 @@
+// 無料版 hoiku.ryimaworks.com の設定。"name" はダッシュボードの Worker の名前と同じにする。
+{
+  "name": "hoiku",
+  "compatibility_date": "2026-11-01",
+  "workers_dev": false,
+  "preview_urls": false,
+  "routes": [
+    { "pattern": "hoiku.ryimaworks.com", "custom_domain": true }
+  ],
+  "assets": {
+    "directory": "./out",
+    "not_found_handling": "404-page"
+  }
+}
