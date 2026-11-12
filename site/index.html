@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta name="description" content="東京23区の保育園の位置・クラス・定員を、エリアに分けた地図と一覧で見られる無料のページです。区の公開資料から作成。">
+<title>保育園マップ（無料版）</title>
+<style>
+:root{--bg:#f6f8fb;--surface:#fff;--fg:#1b2533;--muted:#5d6b7e;--line:#dbe2ec;--accent:#1c5cab}
+@media (prefers-color-scheme:dark){:root{--bg:#10151d;--surface:#18202b;--fg:#e6ecf4;--muted:#9aa8ba;--line:#2b3644;--accent:#7fb0f0;color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic UI","Noto Sans JP",Meiryo,sans-serif;line-height:1.7;padding:24px 16px 40px}
+main{max-width:640px;margin:0 auto;display:grid;gap:14px}
+h1{font-size:21px;margin:0}
+p{margin:0}
+.muted{color:var(--muted);font-size:13.5px}
+.wards{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.wards a{display:block;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;color:var(--fg);text-decoration:none}
+.wards a b{font-size:17px;color:var(--accent)}
+.wards a span{display:block;font-size:13px;color:var(--muted)}
+footer{font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<main>
+  <h1>保育園マップ（無料版）</h1>
+  <p class="muted">区の公開資料から、保育園の位置・クラス・定員を地図と一覧にまとめています。入園を約束するものではありません。最新の情報は区の案内でご確認ください。</p>
+  <ul class="wards">
+    <li><a href="bunkyo/"><b>文京区</b><span>認可保育園など124園・7エリア</span></a></li>
+  </ul>
+  <p class="muted">ほかの区は準備中です。</p>
+  <footer>検索や★は、お使いの端末の中だけで処理され、外部には送られません。</footer>
+</main>
+</body>
+</html>
